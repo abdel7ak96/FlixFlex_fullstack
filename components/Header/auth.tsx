@@ -5,7 +5,7 @@ const Auth = ({ className }: { className?: string }) => {
   const [connected, setConnected] = useState<boolean>(false);
 
   const disconnectedComp = (
-    <div className={`${className}`}>
+    <div className={`${className} m-4`}>
       <button
         onClick={() => setConnected(true)}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
