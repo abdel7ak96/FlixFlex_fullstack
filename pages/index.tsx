@@ -1,12 +1,20 @@
 import type { NextPage } from 'next';
 import Header from '../components/Header';
-import MovieCard from '../components/MovieCard/movieCard';
+import GridLayout from '../components/GridLayout/gridLayout';
+import MovieCard from '../components/MovieCard';
 
 const Home: NextPage = () => {
   return (
     <>
       <Header />
-      <MovieCard />
+      <GridLayout>
+        <MovieCard />
+        <MovieCard />
+        <MovieCard />
+        <MovieCard />
+        <MovieCard />
+        <MovieCard />
+      </GridLayout>
     </>
   );
 };

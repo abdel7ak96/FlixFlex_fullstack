@@ -3,7 +3,7 @@ import { HeartIcon } from "../Icons";
 
 const MovieCard = () => {
   return (
-    <div className="w-64 shadow-md rounded-xl relative cursor-pointer m-10">
+    <div className="w-64 shadow-md rounded-xl relative cursor-pointer">
       <button className="absolute z-10 right-4 top-4 bg-black/50 hover:bg-black/75 rounded-full p-2">
         <HeartIcon className="h-6" fill="none" stroke="white" strokeWidth={1.5} />
       </button>
