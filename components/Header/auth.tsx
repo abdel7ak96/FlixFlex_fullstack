@@ -1,24 +1,24 @@
 import { useState } from 'react';
 import { HeartIcon } from '../Icons';
+import Link from 'next/link';
 
 const Auth = ({ className }: { className?: string }) => {
   const [connected, setConnected] = useState<boolean>(false);
 
   const disconnectedComp = (
     <div className={`${className} m-4`}>
-      <button
-        onClick={() => setConnected(true)}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-      >
-        Login
-      </button>
+      <Link href='/auth'>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+          Login
+        </button>
+      </Link>
     </div>
   );
 
   const connnectedComp = (
     <div className={`${className} m-4 flex justify-end items-center space-x-2`}>
       <button className="hover:cursor-pointer" title="Favorites list">
-        <HeartIcon className='h-8'/>
+        <HeartIcon className="h-8" />
 
         {/* 
         /// TODO: Chip displaying count of favorite movies, Add if you had time
