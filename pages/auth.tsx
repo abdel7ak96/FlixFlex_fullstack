@@ -7,29 +7,19 @@ const Auth: NextPage = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const formSubmit = () => {
+  const formSubmit = async () => {
     const JSONdata = JSON.stringify({ username, password });
-    fetch(loginView ? '/api/login' : '/api/signup', {
+    const res = await fetch(loginView ? '/api/login' : '/api/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSONdata,
-    })
-      .then((res) => {
-        if (res.status != 200) {
-          throw Error;
-        }
-        res.json();
-      })
-      .then((res) => {
-        console.log('success', res);
-        // Save token to cookies
-        // redirect to home
-      })
-      .catch((e) => {
-        console.log('error', e);
-      });
+    });
+    const token = await res.json();
+    console.log(token)
+    // 1. store token to cookie
+    // 2. redirect to main
   };
 
   return (

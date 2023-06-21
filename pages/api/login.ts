@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jsonwebtoken from 'jsonwebtoken';
+import { prisma } from '../../lib/prisma';
 
 type Data = {
   token: string;
@@ -10,7 +10,6 @@ type Data = {
 type Error = {
   error: string;
 };
-const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,16 +20,11 @@ export default async function handler(
 
   const ExistingUser = await prisma.user.findFirst({ where: { username } });
 
-  if (!ExistingUser) {
-    res.status(400).send({ error: 'Username or password incorrect' });
+  if (!ExistingUser || !bcrypt.compareSync(password, ExistingUser.password)) {
+    res.status(400).json({ error: 'Username or password incorrect' });
   } else {
-    const hash = bcrypt.hashSync(password, 10);
-    if (ExistingUser.password != hash) {
-      res.status(400).send({ error: 'Username or password incorrect' });
-    }
-
     const jwtToken = jsonwebtoken.sign(
-      { id: ExistingUser.id, username: ExistingUser.username },
+      { id: ExistingUser?.id, username: ExistingUser?.username },
       process.env.JWT_SECRET || ''
     );
     res.status(200).json({ token: jwtToken });

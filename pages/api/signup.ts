@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jsonwebtoken from 'jsonwebtoken';
+import { prisma } from '../../lib/prisma';
 
 type Data = {
   token: string;
@@ -10,7 +10,6 @@ type Data = {
 type Error = {
   error: string;
 };
-const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
@@ -38,8 +37,5 @@ export default async function handler(
     { id: newUser.id, username: newUser.username },
     process.env.JWT_SECRET || ''
   );
-
-  console.log(jwtToken)
-
   res.status(200).json({ token: jwtToken });
 }
