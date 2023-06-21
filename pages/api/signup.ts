@@ -1,8 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
+import jsonwebtoken from 'jsonwebtoken';
 
 type Data = {
-  id: number;
+  token: string;
 };
 
 type Error = {
@@ -23,12 +25,21 @@ export default async function handler(
     res.status(500).send({ error: 'Username is not valid' });
   }
 
+  const hash = bcrypt.hashSync(password, 10);
+
   const newUser = await prisma.user.create({
     data: {
       username,
-      password,
+      password: hash,
     },
   });
 
-  res.status(200).json({ id: newUser.id });
+  const jwtToken = jsonwebtoken.sign(
+    { id: newUser.id, username: newUser.username },
+    process.env.JWT_SECRET || ''
+  );
+
+  console.log(jwtToken)
+
+  res.status(200).json({ token: jwtToken });
 }

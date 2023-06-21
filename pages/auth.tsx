@@ -15,11 +15,21 @@ const Auth: NextPage = () => {
         'Content-Type': 'application/json',
       },
       body: JSONdata,
-    }).then((res) => {
-      console.log(res.status);
-      // Save token to cookies
-      // redirect to home
-    });
+    })
+      .then((res) => {
+        if (res.status != 200) {
+          throw Error;
+        }
+        res.json();
+      })
+      .then((res) => {
+        console.log('success', res);
+        // Save token to cookies
+        // redirect to home
+      })
+      .catch((e) => {
+        console.log('error', e);
+      });
   };
 
   return (
