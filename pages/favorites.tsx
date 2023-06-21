@@ -10,17 +10,13 @@ import { Movie } from '../types';
 const Home: NextPage = () => {
   const [moviesData, setMoviesData] = useState<Movie[] | []>([]);
 
-  // TODO: Fetch list of IDs of user's favorite movies to change heart icon fill color
-
-  useEffect(() => {
-    fetcher(URLs.nowPlaying)
-      .then((res) => res.json())
-      .then((res) => setMoviesData(res.results));
-  }, []);
+  // TODO: Fetch list of IDs of the athenticated user favorite movies
+  // Fetch details of each movie from The Movie DB using IDs
 
   return (
     <>
       <Header />
+      <h1 className='text-3xl font-bold m-6'>Favorites ♥️</h1>
       <GridLayout>
         {moviesData ? (
           moviesData.map((movie: Movie) => (

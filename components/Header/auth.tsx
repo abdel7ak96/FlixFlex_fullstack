@@ -17,15 +17,14 @@ const Auth = ({ className }: { className?: string }) => {
 
   const connnectedComp = (
     <div className={`${className} m-4 flex justify-end items-center space-x-2`}>
-      <button className="hover:cursor-pointer" title="Favorites list">
+      <Link href={'/favorites'} className="hover:cursor-pointer" title="Favorites list">
         <HeartIcon className="h-8" />
-
         {/* 
         /// TODO: Chip displaying count of favorite movies, Add if you had time
         <div className="relative right-4 bottom-4 bg-red-500 p-1 px-2 rounded-full text-white text-xs">
           1
         </div> */}
-      </button>
+      </Link>
       <div>
         <button
           onClick={() => setConnected(false)}
