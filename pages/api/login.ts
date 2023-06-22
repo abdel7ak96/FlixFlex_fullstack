@@ -3,17 +3,13 @@ import bcrypt from 'bcrypt';
 import jsonwebtoken from 'jsonwebtoken';
 import { prisma } from '../../lib/prisma';
 
-type Data = {
-  token: string;
-};
-
 type Error = {
   error: string;
 };
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data | Error>
+  res: NextApiResponse<string | Error>
 ) {
   const username = req.body.username;
   const password = req.body.password;
@@ -27,6 +23,6 @@ export default async function handler(
       { id: ExistingUser?.id, username: ExistingUser?.username },
       process.env.JWT_SECRET || ''
     );
-    res.status(200).json({ token: jwtToken });
+    res.status(200).json(jwtToken);
   }
 }
