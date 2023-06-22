@@ -9,13 +9,16 @@ import { Movie } from '../types';
 
 const Home: NextPage = () => {
   const [moviesData, setMoviesData] = useState<Movie[] | []>([]);
-
-  // TODO: Fetch list of IDs of user's favorite movies to change heart icon fill color
+  const [favorites, setFavorites] = useState<string[]>([]);
 
   useEffect(() => {
     fetcher(URLs.nowPlaying)
       .then((res) => res.json())
       .then((res) => setMoviesData(res.results));
+
+    fetch('api/favorite', { method: 'GET' })
+      .then((res) => res.json())
+      .then((res) => setFavorites(res.data));
   }, []);
 
   return (
@@ -32,6 +35,7 @@ const Home: NextPage = () => {
               year={movie.release_date.slice(0, 4)}
               voteAverage={movie.vote_average}
               movieId={movie.id}
+              favorited={favorites.includes(movie.id.toString())}
             />
           ))
         ) : (

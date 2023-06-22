@@ -2,6 +2,8 @@ import Image from 'next/image';
 import { HeartIcon } from '../Icons';
 import URLs from '../../constants/urls';
 import Link from 'next/link';
+import { useState } from 'react';
+import useAuthProvider from '../../provider/authProvider';
 
 const MovieCard = ({
   posterUrl,
@@ -10,6 +12,7 @@ const MovieCard = ({
   overview,
   voteAverage,
   movieId,
+  favorited,
 }: {
   posterUrl: string;
   title: string;
@@ -17,14 +20,36 @@ const MovieCard = ({
   overview: string;
   voteAverage: number;
   movieId: number;
+  favorited: boolean;
 }) => {
+  const [fav, setFav] = useState<boolean>(favorited);
+  const { isAuthenticated } = useAuthProvider();
+
+  const toggleFavorie = async () => {
+    if (isAuthenticated()) {
+      fetch(`api/favorite?fav=${movieId}`, {
+        method: fav ? 'DELETE' : 'PUT',
+      }).then((res) => {
+        if (res.status == 200) {
+          setFav(!fav);
+        }
+      });
+    }
+  };
+
   return (
     <Link href={`/movie/${movieId}`}>
       <div className="w-64 shadow-md rounded-xl relative cursor-pointer">
-        <button className="absolute z-10 right-4 top-4 bg-black/50 hover:bg-black/75 rounded-full p-2">
+        <button
+          className="absolute z-10 right-4 top-4 bg-black/50 hover:bg-black/75 rounded-full p-2"
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleFavorie();
+          }}
+        >
           <HeartIcon
             className="h-6"
-            fill="none"
+            fill={fav ? 'red' : 'none'}
             stroke="white"
             strokeWidth={1.5}
           />
