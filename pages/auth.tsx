@@ -1,11 +1,16 @@
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
+import useAuthProvider from '../provider/authProvider';
 
 const Auth: NextPage = () => {
   const [loginView, setLoginView] = useState<boolean>(true);
 
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
+  const router = useRouter();
+  const { login } = useAuthProvider();
 
   const formSubmit = async () => {
     const JSONdata = JSON.stringify({ username, password });
@@ -17,9 +22,13 @@ const Auth: NextPage = () => {
       body: JSONdata,
     });
     const token = await res.json();
-    console.log(token)
-    // 1. store token to cookie
-    // 2. redirect to main
+
+    if (res.status == 200) {
+      login(token, username);
+      router.push('/');
+    } else {
+      alert('Error!');
+    }
   };
 
   return (
