@@ -28,10 +28,9 @@ const Auth = ({ className }: { className?: string }) => {
     <div className={`${className} m-4 flex justify-end items-center space-x-2`}>
       <Link
         href={'/favorites'}
-        className="hover:cursor-pointer"
         title="Favorites list"
       >
-        <HeartIcon className="h-8" />
+        <HeartIcon className="h-8 hover:cursor-pointer" />
       </Link>
       <div>
         <button
