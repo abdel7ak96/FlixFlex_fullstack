@@ -4,6 +4,23 @@ Context : Creation of a web application: Movie app FlixFlex.
 
 ⚠️ Demo video provided
 
+## How to run locally
+1. Install packages using Yarn by running this command from the project folder at `packages.json` level
+```
+yarn install
+```
+2. Create `.env` file by copying the template and fill in the values
+```
+cp .env.template .env
+```
+3. Create your **sqlite** database by creating a file then running the prisma migration
+```
+touch prisma/dev.db
+yarn prisma migrate dev
+```
+
+AND you're good to go
+
 ## Techstack
 
 - React 18
