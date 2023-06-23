@@ -28,7 +28,7 @@ const Home: NextPage = () => {
         .then((res) => res.json())
         .then((res) => setFavorites(res.data));
     }
-  }, [page, q, isAuthenticated]);
+  }, [page, q]);
 
   return (
     <>

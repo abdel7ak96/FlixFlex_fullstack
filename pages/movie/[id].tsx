@@ -38,7 +38,10 @@ const Movie: NextPage = () => {
       {movie ? (
         <>
           <div
-            className={`h-96 relative bg-no-repeat bg-cover bg-[url("https://image.tmdb.org/t/p/w780${movie.backdrop_path}")]`}
+            style={{
+              backgroundImage: `url("https://image.tmdb.org/t/p/w780${movie.backdrop_path}")`,
+            }}
+            className="h-96 relative bg-no-repeat bg-center bg-cover"
           ></div>
           <div className="relative flex bottom-20 left-10">
             <div className="w-56">

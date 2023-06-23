@@ -21,13 +21,12 @@ const Home: NextPage = () => {
       .then((res) => res.json())
       .then((res) => setMoviesData(res.results));
 
-    
     if(isAuthenticated()) {
       fetch('api/favorite', { method: 'GET' })
         .then((res) => res.json())
         .then((res) => setFavorites(res.data));
     }
-  }, [page, isAuthenticated]);
+  }, [page]);
 
   return (
     <>
