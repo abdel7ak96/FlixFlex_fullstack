@@ -7,10 +7,12 @@ import fetcher from '../wrapper/fetcher';
 import URLs from '../constants/urls';
 import { Movie } from '../types';
 import Pagination from '../components/Pagination/pagination';
+import useAuthProvider from '../provider/authProvider';
 
 const Home: NextPage = () => {
   const [moviesData, setMoviesData] = useState<Movie[] | []>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
+  const { isAuthenticated } = useAuthProvider();
 
   const [page, setPage] = useState<number>(1);
 
@@ -19,16 +21,19 @@ const Home: NextPage = () => {
       .then((res) => res.json())
       .then((res) => setMoviesData(res.results));
 
-    fetch('api/favorite', { method: 'GET' })
-      .then((res) => res.json())
-      .then((res) => setFavorites(res.data));
-  }, [page]);
+    
+    if(isAuthenticated()) {
+      fetch('api/favorite', { method: 'GET' })
+        .then((res) => res.json())
+        .then((res) => setFavorites(res.data));
+    }
+  }, [page, isAuthenticated]);
 
   return (
     <>
       <Header />
       <GridLayout>
-        {moviesData ? (
+        {moviesData && favorites ? (
           moviesData.map((movie: Movie) => (
             <MovieCard
               key={movie.id}
