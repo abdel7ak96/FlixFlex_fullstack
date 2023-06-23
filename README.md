@@ -1,34 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# FlixFlex
 
-## Getting Started
+Context : Creation of a web application: Movie app FlixFlex.
 
-First, run the development server:
+⚠️ Demo video provided
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Techstack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- React 18
+- Next js 12
+- Prisma
+- SQLite
+- TypeScript
+- Node
+- JSON Web Token
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Endpoints
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+| Endpoint | Description                                                                            |
+| -------- | -------------------------------------------------------------------------------------- |
+| login    | endpoint responsible for authenticating a user and generating JWT token                |
+| signup   | endpoint responsible for creating a new user and generating JWT token                  |
+| favorite | endpoint responsible for add/deleting/returning list of favored movies by a given user |
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Database schema
 
-## Learn More
+| User      | Description                                                                         |
+| --------- | ----------------------------------------------------------------------------------- |
+| id        | unique Id generating on a new user's account creation                               |
+| username  | unique username picked by the user                                                  |
+| password  | hashed version of the password stored on database                                   |
+| favorites | relation to the Favorites table containing list of id of movies favored by the user |
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+| Favorites | favorites                       |
+| --------- | ------------------------------- |
+| id        | unique id generated on creation |
+| UserId    | relation to User                |
+| User      | Owner user id                   |
