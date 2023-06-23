@@ -6,20 +6,23 @@ import { useEffect, useState } from 'react';
 import fetcher from '../wrapper/fetcher';
 import URLs from '../constants/urls';
 import { Movie } from '../types';
+import Pagination from '../components/Pagination/pagination';
 
 const Home: NextPage = () => {
   const [moviesData, setMoviesData] = useState<Movie[] | []>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
 
+  const [page, setPage] = useState<number>(1);
+
   useEffect(() => {
-    fetcher(URLs.nowPlaying)
+    fetcher(`${URLs.nowPlaying}&page=${page}`)
       .then((res) => res.json())
       .then((res) => setMoviesData(res.results));
 
     fetch('api/favorite', { method: 'GET' })
       .then((res) => res.json())
       .then((res) => setFavorites(res.data));
-  }, []);
+  }, [page]);
 
   return (
     <>
@@ -42,6 +45,12 @@ const Home: NextPage = () => {
           <h1>Loading</h1>
         )}
       </GridLayout>
+      <Pagination
+        page={page}
+        setPage={(newPage: number) => {
+          setPage(newPage);
+        }}
+      />
     </>
   );
 };
