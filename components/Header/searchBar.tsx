@@ -1,4 +1,10 @@
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+
 const SearchBar = ({ className }: { className?: string }) => {
+  const router = useRouter();
+  const [search, setSearch] = useState<string>('');
+
   return (
     <div className={`${className} w-full flex justify-center`}>
       <input
@@ -6,7 +12,12 @@ const SearchBar = ({ className }: { className?: string }) => {
         placeholder="Search movies"
         type="text"
         name="search"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
         id="search"
+        onKeyDown={(e) => {
+          if (e.key == 'Enter') router.push(`/search?q=${search}`);
+        }}
       />
       <div className="relative right-12 flex items-center pl-3 pointer-events-none">
         <svg
